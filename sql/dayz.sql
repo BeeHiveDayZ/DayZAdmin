@@ -126,3 +126,13 @@ INSERT INTO `users` (`id`, `login`, `password`, `salt`, `lastlogin`) VALUES
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+--
+-- This part adds a view (virtual table) that contains the former Bliss Hive table structure.
+-- Basically, DayZAdmin stopped working once Bliss moved away from the former main table.
+-- Now Bliss is using the survivor and profile tables, luckily main has been removed so this is possible.
+--
+
+CREATE VIEW main AS 
+SELECT survivor.id AS id, survivor.unique_id AS uid, profile.name AS name, survivor.pos AS pos, survivor.inventory AS inventory, survivor.backpack AS backpack, survivor.medical AS medical, survivor.is_dead AS death, survivor.model AS model, survivor.state AS state, profile.humanity AS humanity, survivor.survivor_kills AS hkills, survivor.bandit_kills AS bkills, survivor.zombie_kills AS kills,survivor.headshots AS hs, survivor.last_ate as late,survivor.last_drank AS ldrank, survivor.last_update AS lastupdate, survivor.start_time AS survival
+FROM profile JOIN survivor ON survivor.unique_id = profile.unique_id;
